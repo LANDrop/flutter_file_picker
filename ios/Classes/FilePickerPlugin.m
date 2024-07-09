@@ -532,10 +532,7 @@ didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls{
                 return;
             }
             
-            long timestamp = (long)([[NSDate date] timeIntervalSince1970] * 1000);
-            NSString * filenameWithoutExtension = [url.lastPathComponent stringByDeletingPathExtension];
-            NSString * fileExtension = url.pathExtension;
-            NSString * filename = [NSString stringWithFormat:@"%@-%ld.%@", filenameWithoutExtension, timestamp, fileExtension];
+            NSString * filename = url.lastPathComponent;
             NSString * extension = [filename pathExtension];
             NSFileManager * fileManager = [[NSFileManager alloc] init];
             NSURL * cachedUrl;
