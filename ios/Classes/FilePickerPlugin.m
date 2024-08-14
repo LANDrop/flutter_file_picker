@@ -24,6 +24,7 @@
 @property (nonatomic) BOOL allowCompression;
 @property (nonatomic) dispatch_group_t group;
 @property (nonatomic) BOOL isSaveFile;
+@property (nonatomic) NSURL *pickedDirectory;
 @end
 
 @implementation FilePickerPlugin
@@ -403,6 +404,11 @@ didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls{
     NSMutableArray<NSURL *> *newUrls;
     if(controller.documentPickerMode == UIDocumentPickerModeOpen) {
         newUrls = urls;
+        if(self.pickedDirectory != nil) {
+            [self.pickedDirectory stopAccessingSecurityScopedResource];
+        }
+        self.pickedDirectory = urls[0];
+        [self.pickedDirectory startAccessingSecurityScopedResource];
     }
     if(controller.documentPickerMode == UIDocumentPickerModeImport) {
         newUrls = [NSMutableArray new];
